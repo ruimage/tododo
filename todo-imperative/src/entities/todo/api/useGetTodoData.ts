@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react"
-import {Todo} from "./types.ts";
+import {Todo} from "../../../shared/types.ts";
 
 
 export const useGetTodoData = () => {
