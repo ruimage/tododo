@@ -1,16 +1,16 @@
-import {useEffect, useState} from "react";
-import {User} from "./types.ts";
+import { useEffect, useState } from "react";
+import { User } from "./types.ts";
 
 export const useGetUsers = () => {
-    const [users, setUsers] = useState<User[]>([])
+	const [users, setUsers] = useState<User[]>([]);
 
-    useEffect(() => {
-        fetch('https://jsonplaceholder.typicode.com/users')
-            .then(response => response.json())
-            .then(data => {
-                setUsers(data)
-            })
-    }, [])
+	useEffect(() => {
+		fetch("https://jsonplaceholder.typicode.com/users")
+			.then((response) => response.json())
+			.then((data) => {
+				setUsers(data);
+			});
+	}, []);
 
-    return users
-}
+	return users;
+};

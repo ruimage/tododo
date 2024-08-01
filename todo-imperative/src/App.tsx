@@ -1,13 +1,12 @@
-import './App.css'
-import {TodoList} from "./widgets";
+import "./App.css";
+import { TodoList } from "./widgets";
 
 function App() {
-
-  return (
-    <>
-      <TodoList/>
-    </>)
-
+	return (
+		<>
+			<TodoList />
+		</>
+	);
 }
 
-export default App
+export default App;
