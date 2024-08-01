@@ -1,6 +1,6 @@
 import { Alert, Checkbox, Stack } from "@mui/material";
-import { Todo } from "../../../entities/todo";
-import { FC, useEffect, useState } from "react";
+import { type FC, useEffect, useState } from "react";
+import type { Todo } from "../../../entities/todo";
 
 type ChangeTodoStatusProps = {
 	id: Todo["id"];

@@ -1,1 +1,1 @@
-export {FilteredByCompleted} from "./ui/FilteredByCompleted";
+export { FilteredByCompleted } from "./ui/FilteredByCompleted";

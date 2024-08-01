@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { User } from "./types.ts";
+import type { User } from "./types.ts";
 
 export const useGetUsers = () => {
 	const [users, setUsers] = useState<User[]>([]);

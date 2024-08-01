@@ -24,7 +24,12 @@ export const TodoRow: FC<TodoProps> = ({
 			minWidth={"30vw"}
 			maxWidth={"30vw"}
 		>
-			<Stack direction="row" spacing={1} alignItems="center" justifyContent={'space-between'}>
+			<Stack
+				direction="row"
+				spacing={1}
+				alignItems="center"
+				justifyContent={"space-between"}
+			>
 				{activeSlotsStart}
 				<Typography
 					variant="body1"
@@ -32,7 +37,7 @@ export const TodoRow: FC<TodoProps> = ({
 						textDecoration: completed ? "line-through" : "none",
 						wrap: "break-word",
 						textWrapping: "wrap",
-				}}
+					}}
 				>
 					{title}
 				</Typography>
