@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Todo } from "../../../shared/types.ts";
+import type {Todo} from "../model/types.ts";
 
 export const useGetTodoData = () => {
 	const [todos, setTodos] = useState<Todo[]>([]);
