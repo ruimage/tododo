@@ -1,29 +1,54 @@
+import {
+	curry,
+	filter,
+	isNotEmpty,
+	pathOr,
+	pipe,
+	propEq,
+	propOr,
+	when,
+} from "ramda";
 import type { Todo } from "../../entities/todo";
 import type { FilterSettings } from "../../shared/GlobalProvider.tsx";
+import type { User } from "../../shared/types.ts";
 
-export const completedFilter =
-	(filterSettings: FilterSettings) => (todo: Todo) => {
-		if (filterSettings.filterByCompleted) return todo.completed;
-		return true;
-	};
+export const filterTodosByCompleted = curry(
+	(filterSettings: FilterSettings, todos: Todo[]): Todo[] => {
+		const completedFilterValue = propOr(
+			false,
+			"filterByCompleted",
+			filterSettings,
+		) as boolean;
+		const getByCompletion = filter<Todo>(
+			propEq(completedFilterValue, "completed"),
+		);
 
-export const titleFilter = (filterSettings: FilterSettings) => (todo: Todo) => {
-	if (filterSettings.filterByTitle)
-		return todo.title.includes(filterSettings.filterByTitle);
-	return true;
-};
+		return when<Todo[], Todo[]>(
+			() => isNotEmpty(completedFilterValue),
+			getByCompletion,
+		)(todos) as Todo[];
+	},
+);
 
-export const userFilter = (filterSettings: FilterSettings) => (todo: Todo) => {
-	if (filterSettings.filterByUser)
-		return todo.userId === filterSettings.filterByUser.id;
-	return true;
-};
+export const filterTodosByUser = curry(
+	(filterSettings: FilterSettings, todos: Todo[]): Todo[] => {
+		const userFilterValue = pathOr(
+			undefined,
+			["filterByUser", "id"],
+			filterSettings,
+		) as User["id"] | undefined;
+		return when<Todo[], Todo[]>(
+			() => isNotEmpty(userFilterValue),
+			filter<Todo>(propEq(userFilterValue, "userId")),
+		)(todos) as Todo[];
+	},
+);
+
 export const applyFiltersOnTodos = (
 	todos: Todo[],
 	filterSettings: FilterSettings,
-): Todo[] => {
-	return todos
-		.filter(completedFilter(filterSettings))
-		.filter(titleFilter(filterSettings))
-		.filter(userFilter(filterSettings));
-};
+): Todo[] =>
+	pipe(
+		(t: Todo[]): Todo[] => filterTodosByUser(filterSettings)(t),
+		(t: Todo[]): Todo[] => filterTodosByCompleted(filterSettings)(t),
+	)(todos);

@@ -1,13 +1,12 @@
+import * as R from "ramda";
 import type { User } from "../../../shared/types.ts";
 
-export const getUserNames = (users: User[]) => {
-	return users.map((user: User) => {
-		return user.username;
-	});
-};
-export const getUserByUsername = (
-	users: User[],
+export const getUserNames = R.map<User, string>(R.prop("username"));
+
+export const getUserByUsername: (
 	username: string,
-): User | null => {
-	return users.find((user: User) => user.username === username) || null;
-};
+	users: User[],
+) => User | undefined = R.curry((username: string, users: User[]) => {
+	const eqUsername = R.propEq(username, "username");
+	return R.find(eqUsername, users);
+});

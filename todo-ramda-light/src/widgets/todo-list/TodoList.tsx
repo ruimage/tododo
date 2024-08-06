@@ -3,13 +3,10 @@ import { type Todo, TodoRow, useGetTodoData } from "../../entities/todo";
 import { UserTodoPresentatation } from "../../entities/user";
 import { getUserById } from "../../entities/user";
 import { ChangeTodoStatus } from "../../features/change-todo-status";
-import {
-	useGlobalContext,
-} from "../../shared/GlobalProvider.tsx";
+import { useGlobalContext } from "../../shared/GlobalProvider.tsx";
 import type { User } from "../../shared/types.ts";
 import { useGetUsers } from "../../shared/useGetUsers.ts";
-import {applyFiltersOnTodos} from "../../src/widgets/todo-list/lib.ts";
-
+import { applyFiltersOnTodos } from "../../src/widgets/todo-list/lib.ts";
 
 export const TodoList = () => {
 	const { filterSettings } = useGlobalContext();

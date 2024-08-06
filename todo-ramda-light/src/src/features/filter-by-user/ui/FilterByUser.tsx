@@ -23,7 +23,7 @@ export const FilterByUser = () => {
 			return;
 		}
 
-		const currentUser = getUserByUsername(users, userName);
+		const currentUser = getUserByUsername(userName, users);
 		if (!currentUser) return;
 
 		setFilterByUser(currentUser);

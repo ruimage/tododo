@@ -22,7 +22,7 @@ describe("getUserName", () => {
 
 describe("getUserByUsername", () => {
 	it("should return user by username", () => {
-		const userNames = getUserByUsername(userTestData, "Bret");
+		const userNames = getUserByUsername("Bret", userTestData);
 		expect(userNames).toStrictEqual({
 			address: {
 				city: "Gwenborough",
