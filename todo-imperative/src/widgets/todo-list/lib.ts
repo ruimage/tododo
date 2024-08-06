@@ -18,6 +18,7 @@ export const userFilter = (filterSettings: FilterSettings) => (todo: Todo) => {
 		return todo.userId === filterSettings.filterByUser.id;
 	return true;
 };
+
 export const applyFiltersOnTodos = (
 	todos: Todo[],
 	filterSettings: FilterSettings,

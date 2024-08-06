@@ -4,35 +4,12 @@ import { UserTodoPresentatation } from "../../entities/user";
 import { getUserById } from "../../entities/user";
 import { ChangeTodoStatus } from "../../features/change-todo-status";
 import {
-	type FilterSettings,
 	useGlobalContext,
 } from "../../shared/GlobalProvider.tsx";
 import type { User } from "../../shared/types.ts";
 import { useGetUsers } from "../../shared/useGetUsers.ts";
+import {applyFiltersOnTodos} from "../../src/widgets/todo-list/lib.ts";
 
-const prepareData = (todos: Todo[], filterSettings: FilterSettings): Todo[] => {
-	const completedFilter = (todo: Todo) => {
-		if (filterSettings.filterByCompleted) return todo.completed;
-		return true;
-	};
-
-	const titleFilterApplied = (todo: Todo) => {
-		if (filterSettings.filterByTitle)
-			return todo.title.includes(filterSettings.filterByTitle);
-		return true;
-	};
-
-	const userFilterApplied = (todo: Todo) => {
-		if (filterSettings.filterByUser)
-			return todo.userId === filterSettings.filterByUser.id;
-		return true;
-	};
-
-	return todos
-		.filter(completedFilter)
-		.filter(titleFilterApplied)
-		.filter(userFilterApplied);
-};
 
 export const TodoList = () => {
 	const { filterSettings } = useGlobalContext();
@@ -40,7 +17,7 @@ export const TodoList = () => {
 	const todos: Todo[] = useGetTodoData();
 	const users: User[] = useGetUsers();
 
-	const todosData = prepareData(todos, filterSettings);
+	const todosData = applyFiltersOnTodos(todos, filterSettings);
 
 	return (
 		<List>
