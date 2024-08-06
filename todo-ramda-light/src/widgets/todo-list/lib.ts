@@ -1,8 +1,8 @@
 import {
-	curry,
+	path,
+	curry,equals,
 	filter,
-	isNotEmpty,
-	pathOr,
+	isNotNil,
 	pipe,
 	propEq,
 	propOr,
@@ -24,7 +24,7 @@ export const filterTodosByCompleted = curry(
 		);
 
 		return when<Todo[], Todo[]>(
-			() => isNotEmpty(completedFilterValue),
+			()=>equals(true,completedFilterValue),
 			getByCompletion,
 		)(todos) as Todo[];
 	},
@@ -32,13 +32,12 @@ export const filterTodosByCompleted = curry(
 
 export const filterTodosByUser = curry(
 	(filterSettings: FilterSettings, todos: Todo[]): Todo[] => {
-		const userFilterValue = pathOr(
-			undefined,
+		const userFilterValue = path(
 			["filterByUser", "id"],
 			filterSettings,
 		) as User["id"] | undefined;
 		return when<Todo[], Todo[]>(
-			() => isNotEmpty(userFilterValue),
+			() => isNotNil(userFilterValue),
 			filter<Todo>(propEq(userFilterValue, "userId")),
 		)(todos) as Todo[];
 	},

@@ -2,16 +2,7 @@ import { Autocomplete, TextField } from "@mui/material";
 import { useGlobalContext } from "../../../shared/GlobalProvider.tsx";
 import type { User } from "../../../shared/types.ts";
 import { useGetUsers } from "../../../shared/useGetUsers.ts";
-
-const getUserNames = (users: User[]) => {
-	return users.map((user: User) => {
-		return user.username;
-	});
-};
-
-const getUserByUsername = (users: User[], username: string): User | null => {
-	return users.find((user: User) => user.username === username) || null;
-};
+import { getUserByUsername, getUserNames } from "../lib/lib.ts";
 
 export const FilterByUser = () => {
 	const { setFilterSettings } = useGlobalContext();
@@ -32,7 +23,7 @@ export const FilterByUser = () => {
 			return;
 		}
 
-		const currentUser = getUserByUsername(users, userName);
+		const currentUser = getUserByUsername(userName, users);
 		if (!currentUser) return;
 
 		setFilterByUser(currentUser);

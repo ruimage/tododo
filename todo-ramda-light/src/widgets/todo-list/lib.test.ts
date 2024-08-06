@@ -81,75 +81,18 @@ const todosCompleted = [
 	},
 ];
 
-const todosUnCompleted = [
-	{
-		userId: 1,
-		id: 1,
-		title: "delectus aut autem",
-		completed: false,
-	},
-	{
-		userId: 1,
-		id: 2,
-		title: "quis ut nam facilis et officia qui",
-		completed: false,
-	},
-	{
-		userId: 1,
-		id: 3,
-		title: "fugiat veniam minus",
-		completed: false,
-	},
-	{
-		userId: 1,
-		id: 5,
-		title: "laboriosam mollitia et enim quasi adipisci quia provident illum",
-		completed: false,
-	},
-	{
-		userId: 1,
-		id: 6,
-		title: "qui ullam ratione quibusdam voluptatem quia omnis",
-		completed: false,
-	},
-	{
-		userId: 1,
-		id: 7,
-		title: "illo expedita consequatur quia in",
-		completed: false,
-	},
-	{
-		userId: 1,
-		id: 9,
-		title: "molestiae perspiciatis ipsa",
-		completed: false,
-	},
-	{
-		userId: 1,
-		id: 13,
-		title: "et doloremque nulla",
-		completed: false,
-	},
-	{
-		userId: 1,
-		id: 18,
-		title: "dolorum est consequatur ea mollitia in culpa",
-		completed: false,
-	},
-];
-
 describe("filters", () => {
 	it("should filter by completed", () => {
 		const initCompleteFilter = filterTodosByCompleted(filterSettings);
 		expect(initCompleteFilter(testTodos)).toStrictEqual(todosCompleted);
 	});
 
-	it("should filter by not completed", () => {
+	it("should filter by all", () => {
 		const initCompleteFilter = filterTodosByCompleted({
 			...filterSettings,
 			filterByCompleted: false,
 		});
-		expect(initCompleteFilter(testTodos)).toStrictEqual(todosUnCompleted);
+		expect(initCompleteFilter(testTodos)).toStrictEqual(testTodos);
 	});
 
 	it("should filter by user", () => {
