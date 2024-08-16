@@ -1,4 +1,5 @@
 import { Autocomplete, TextField } from "@mui/material";
+import { defaultTo, ifElse, isNil, pipe, when } from "ramda";
 import { useGlobalContext } from "../../../shared/GlobalProvider.tsx";
 import type { User } from "../../../shared/types.ts";
 import { useGetUsers } from "../../../shared/useGetUsers.ts";
@@ -14,24 +15,21 @@ export const FilterByUser = () => {
 		setFilterSettings({ type: "setFilterByUser", payload: user });
 	};
 
-	const updateFilterByUser = (
-		users: User[],
-		userName: User["username"] | null,
-	) => {
-		if (userName === null) {
-			setFilterByUser(null);
-			return;
-		}
+	const setFilterByUserOnUserFound = pipe(
+		(username: string | null) => getUserByUsername(username,users),
+		defaultTo(null),
+		when(Boolean, setFilterByUser)
+	);
 
-		const currentUser = getUserByUsername(userName, users);
-		if (!currentUser) return;
-
-		setFilterByUser(currentUser);
-	};
+	const updateFilterByUser = ifElse(
+		isNil,
+		() => setFilterByUser(null),
+		setFilterByUserOnUserFound
+	);
 
 	// @ts-ignore
 	const handleChange = (event, value) => {
-		updateFilterByUser(users, value || null);
+		updateFilterByUser(value || null);
 	};
 
 	return (

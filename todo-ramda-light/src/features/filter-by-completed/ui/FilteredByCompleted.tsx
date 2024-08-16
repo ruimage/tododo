@@ -1,11 +1,13 @@
 import { Checkbox, Stack, Typography } from "@mui/material";
+import {prop} from "ramda";
 import type { FC } from "react";
 import { useGlobalContext } from "../../../shared/GlobalProvider.tsx";
 
 export const FilteredByCompleted: FC = () => {
 	const { filterSettings, setFilterSettings } = useGlobalContext();
 
-	const checked = filterSettings.filterByCompleted;
+	const checked = prop('filterByCompleted', filterSettings)
+
 	const changeHandler = () => {
 		setFilterSettings({ type: "setFilterByCompleted", payload: !checked });
 	};

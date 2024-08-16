@@ -14,11 +14,13 @@ import type { User } from "../../shared/types.ts";
 
 export const filterTodosByCompleted = curry(
 	(filterSettings: FilterSettings, todos: Todo[]): Todo[] => {
+
 		const completedFilterValue = propOr(
 			false,
 			"filterByCompleted",
 			filterSettings,
 		) as boolean;
+
 		const getByCompletion = filter<Todo>(
 			propEq(completedFilterValue, "completed"),
 		);
@@ -32,10 +34,12 @@ export const filterTodosByCompleted = curry(
 
 export const filterTodosByUser = curry(
 	(filterSettings: FilterSettings, todos: Todo[]): Todo[] => {
+
 		const userFilterValue = path(
 			["filterByUser", "id"],
 			filterSettings,
 		) as User["id"] | undefined;
+
 		return when<Todo[], Todo[]>(
 			() => isNotNil(userFilterValue),
 			filter<Todo>(propEq(userFilterValue, "userId")),
