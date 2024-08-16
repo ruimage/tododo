@@ -1,4 +1,5 @@
 import { Alert, Checkbox, Stack } from "@mui/material";
+import {isNotEmpty, when} from "ramda";
 import { type FC, useEffect, useState } from "react";
 import type { Todo } from "../../../entities/todo";
 
@@ -14,10 +15,12 @@ export const ChangeTodoStatus: FC<ChangeTodoStatusProps> = ({
 	const [visible, setVisible] = useState(false);
 
 	useEffect(() => {
-		if (!visible) return;
-		setTimeout(() => {
-			setVisible(false);
-		}, 3000);
+		const setVisibleFalseByTimeout = () => {setTimeout(() => {setVisible(false)}, 3000)}
+
+		when(
+			isNotEmpty,
+			setVisibleFalseByTimeout,
+		)(visible);
 	}, [visible]);
 
 	const handleChange = () => {
